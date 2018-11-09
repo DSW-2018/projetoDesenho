@@ -1,11 +1,22 @@
 version: '3'
 
 services:
-  backend: 
+  backend:
+    image: postgres
+  web:
     build: .
+    command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
-      - ./:/code
+      - .:/code
     ports:
-      - 8000:8000
-    tty: true
-    command: /bin/bash -l -c 'python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0:8000'
+      - "8000:8000"
+    depends_on:
+      - backend
+  migrate:
+    build: .
+    command: python3 manage.py makemigrations --noinput
+    command: python3 manage.py migrate --noinput
+    volumes:
+      - .:/code
+    depends_on:
+      - web
