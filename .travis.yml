@@ -1,31 +1,19 @@
 sudo: required
 
-language: python
-python:
-  - "3.6.4"
 services:
   - docker
-before_install:
-  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-  - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-  - sudo apt-get update
-  - sudo apt-get -y install docker-ce
-  - sudo pip install docker-compose
-  - pip install -r requirements.txt
-before_script:
-  - sudo docker-compose -f docker-compose.yml up --d
 
+before_script:
+  - docker-compose up -d
 
 script:
-  - python manage.py makemigrations --noinput
-#  - python manage.py migrate
+  - docker exec backend python3 manage.py test
 
 after_script:
-  - docker-compose down
+  - docker-compose down --remove-orphans
 
 deploy:
   provider: heroku
   api_key:
-    secure: "WbdrlQ9hxnXdtf/r3PtaKSRxFjVp/R1GSJwVPsRlAL13L/psrqcmxkDYvFDL7YU/Kgu+BGYMtghhbJIRKW+crBazsTWy21+x4Hbz1fLtXWTnP4P22sP7tK1e+q9Rz7lvFX1+KkTL2PtMtWqZ/6vofFm9RVrneOC47xAri/J8e/HqQ30fBgDc2ZrWqEMILhFSPSUCOMUTpF9+wXoZF6QHsiKVFcFHL3DGJebYli3IZ+MUREiOF2LQeO6Zgufl0l6zUBvAlMx9Il4bGKTeHcDf5o4uZMyNSjV/s7AcGqcHq1LHHjDl+t/08ThuQ5OpKD87/1k0/FGkh6yQnvaBlqsTMo38SsvwdFE8AdhtaEfxk5JTO/LZ3nEQ8FqQ+yx7U9ZH21y0ZS5YMWhxi0dFqxGkEVD9BorENJLHc/leXIMmkmxN2rKeOQ571P4Wwu70Y/FXdMCtUETT6XQiJ+ojo6KG+XsUWyN7h7CV0M4MS61uy0rKQr8cWpd6E4RBBTvwy8idoeyfDCGaWIA5v1O5LkkxKpZ5tttg4bbAuyg1EFp1N4bKOVl/eNkn27HQ2cZGitdQYzrq2cAIF5hAwhigZi8C98Tsza6o3YgFKmHQXczaSINTsrKyhJ9nQx5FYymKUZpNAxh0j5l1tRSsdmwwNzmHQAuSjRjrk0loy0YT3Dmowkc="
-  app:
-    master: economizaqui
+    secure: QiiPePlji6By+QpGwgnUHXxbtN6cAHT8EgMmTzGrOO9W8gZKkJK6jzhRZOFXR8KYXzttaOcn6Vg3NZEmdiwJyKdse0PYLZg3ZkB63WCPIfxJbKIFgMHINg0oXJCYZZ9yUUfXiBDJNUiQHzjXej8KrDXwMAowBv/VL42F5O5nS/aFpUuWzHnkQXk+2hAyaSMoD692bn7DoMaJ061Uct2SZqOJaGSRlExPVogHM+goUbyhDOtdssiv509k4XpXxTytV2ALJShy7mzJxMb3fL8KpLlV7T8RxofwIDNMhX/mMFFySmxrCAB4l9Uub7u7H3T7kzoYuxw+69T29KZ/CGRyyDwHs1cPqvzPq4goqIZ7qhCs+ohtDPnMJ+D0FDI/5omubIrTcPIbGjZQN112z9LEt1HOTEq6eNDVsKLV0Hy8DJnOgXsnoimNrKj2X2pR/vXIL1Q6nSq/J+zLgoV7XaWz2fgLsEkGQiCnqwplb0KrHzKGhaiF5spNCbcVQD+HD97+qJTQ9/KXcuvoy/YYnSedcfJRkjFouPq0NEvHzBi58Vt1sGuTlpE++hIuklA3LseSqVWcj69M41ZWVok+ewl74ZMYOBKe6dLO68p8CHepRSKbj+hNYf5Y1OdNFOVxb7WhThn/kxq8NqgsXTzRZ8RNg6DEsL/VUXczWp8E7AmUGkQ=
+  on: development
