@@ -1,7 +1,9 @@
 Data | Versão | Descrição | Responsáveis
 -- | -- | -- | --
 21/11/2018 | 1.0 | Adição de seção de Introdução, Representação da Arquitetura, Metas e Restrições de Arquitetura e Visão de Casos de Uso | Amanda Bezerra
-23/11/2018 | 1.0 | Adição de seção de Visão Lógica, Visão Geral e Visão de Modelos | Amanda Bezerra
+23/11/2018 | 1.1 | Adição de seção de Visão Lógica, Visão Geral e Visão de Modelos | Amanda Bezerra
+23/11/2018 | 1.2 | Adição de detalhamento de micro serviço | Eduardo Júnio
+
 
 # Documento de Arquitetura de Software
 
@@ -25,6 +27,7 @@ Este documento está organizado da seguinte forma:
 + Visão de Casos de Uso
 
 ## Representação da Arquitetura
+###  MTV
 <p align="justify">
 Este projeto utiliza o padrão MTV (<i>Model-Template-View</i>) que organiza a estrutura do projeto em camadas, sendo elas:
 <p>
@@ -38,6 +41,11 @@ A imagem a seguir apresenta as interações entre as camadas:
 ![](https://lh3.googleusercontent.com/zOYc6WV5t4NwvWMxQiXzPt40fUa28BmWKgiAQ0ZOdQe7ZxGo_36NE-mOFVViDpMVlcUq7B1ffjl2KezDiaKfEg8D1NILqySCYZFJG3ALP5_Gycf_6rTO4920DkFsTJj0vOyf9qr2)
 
 <i>Figura 1. Padrão arquitetural MTV.</i>
+
+### Microsserviço
+
+A aplicação utiliza um microsserviço especialmente desenvolvido para ser utilizado em conjunto com o padrão observer implementado. Todas as vezes que uma conta é acessada, o métedo update do observer envia para o microsserviço um json que por sua vez é utilizado para notificar por email um interessado que um novo login foi realizado.
+
 
 ## Metas e Restrições de Arquitetura 
 As metas e restrições do projeto que possuem influência significativa na arquitetura são:
